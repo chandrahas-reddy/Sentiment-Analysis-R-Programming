@@ -21,13 +21,20 @@ Steps to follow:
     https://developers.facebook.com
 
 2)  After creating an app in Twitter, save the following keys to somewhere safe on desktop for further use.
+
     consumerKey
+    
     consumerSecret
+    
     accessToken
+    
     accessSecret
+    
 
     After creating an app in Facebook, save the following keys to somewhere safe on desktop for further use.
+    
     App ID
+    
     App Secret
 
 3) Install R and R Studio on your local machine.
