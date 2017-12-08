@@ -87,7 +87,7 @@ Steps to follow:
 
 Sample visualization using ggplot2
 
-![alt text](https://github.com/chandrahas-reddy/Sentiment-Analysis-R-Programming/Twitter/Rplot.jpeg)
+![alt text](https://raw.githubusercontent.com/chandrahas-reddy/Sentiment-Analysis-R-Programming/Twitter/Rplot.jpeg)
 
 11) Finally store this data into CSV for any further purposes. 
 
