@@ -85,6 +85,10 @@ Steps to follow:
 
 10) Use the sentiment scores for any visualizations with ggplot() function.
 
+Sample visualization using ggplot2
+
+![alt text](https://github.com/chandrahas-reddy/Sentiment-Analysis-R-Programming/Twitter/Rplot.jpeg)
+
 11) Finally store this data into CSV for any further purposes. 
 
 Happy Data Analysis!!
