@@ -1,6 +1,14 @@
 # Sentiment-Analysis-R-Programming
 This repository helps Data Analytics/Science Enthusiasts to carry out Lexicon based Sentiment Analysis on text derived from Twitter, Facebook and other data sources.
 
+*This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
+
+*This work is inspired from various scripts and improved with several iterations.
+
+*This code can be shared and re-used on any purpose.
+
+*Not for commercial purposes.
+
 #Sentiment Analysis using Twitter & Facebook
 The code is well documented and differentiates specific platform orientated code.
 ##
