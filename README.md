@@ -55,8 +55,10 @@ Steps to follow:
 
 8) Clean the data and remove punctuations, digits, special characters, etc. Sentiment analysis performed on cleaned data set gives us better insights removing unncessary words.
 
-9) Use the sentiment scores for any visualizations with ggplot() function.
+9) Use the positive and negative words files to analysize sentiments.
 
-10) Finally store this data into CSV for any further purposes. 
+10) Use the sentiment scores for any visualizations with ggplot() function.
+
+11) Finally store this data into CSV for any further purposes. 
 
 Happy Data Analysis!!
