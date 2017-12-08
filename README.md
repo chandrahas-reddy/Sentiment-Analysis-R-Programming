@@ -31,8 +31,9 @@ Steps to follow:
     App Secret
 
 3) Install R and R Studio on your local machine.
-    ##Install R - https://www.r-project.org
-    ##Install R Studio - https://www.rstudio.com/products/rstudio/download/
+
+    #Install R - https://www.r-project.org
+    #Install R Studio - https://www.rstudio.com/products/rstudio/download/
 
 
 4) Set working directory in R studio:
