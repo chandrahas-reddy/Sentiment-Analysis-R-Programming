@@ -46,6 +46,7 @@ Steps to follow:
 
 4) Set working directory in R studio:
     eg: 
+    
     For Windows machine
     setwd("C:/Users/chandrahas/Desktop/kaggle")
 
