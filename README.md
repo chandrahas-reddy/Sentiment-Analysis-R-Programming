@@ -9,6 +9,8 @@ This repository helps Data Analytics/Science Enthusiasts to carry out Lexicon ba
 
 *Not for commercial purposes.
 
+![alt text](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
+
 #Sentiment Analysis using Twitter & Facebook
 The code is well documented and differentiates specific platform orientated code.
 ##
