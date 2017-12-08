@@ -54,10 +54,15 @@ Steps to follow:
     setwd("C:\Users\chandrahas\Desktop\kaggle")
 
 5) Install following packages:
+
     install.packages("twitteR")
+    
     install.packages("Rfacebook")
+    
     install.packages("plyr")
+    
     install.packages("stringr")
+    
     install.packages("ggplot2") 
 
 6) Load the libraries using library() function
