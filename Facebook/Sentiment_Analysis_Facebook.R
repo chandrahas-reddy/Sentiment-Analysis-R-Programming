@@ -1,69 +1,70 @@
-#Lexicon based sentiment analysis on twitter data
+#Lexicon based sentiment analysis on facebook data
 #libraries required for Lexicon based sentiment analysis and visualization
-install.packages("twitteR")
+install.packages("Rfacebook")
 install.packages("plyr")
 install.packages("stringr")
 install.packages("ggplot2")
 
 #loading the library
-library(twitteR)
+library(Rfacebook)
 library(plyr)
 library(stringr)
 library(ggplot2)
 
-#Twitter Authentication
-#Creating a twitter app is easy and many tutorials can be found online!
+#Facebook Authentication
+#Creating a Facebook app is easy and many tutorials can be found online!
 #please put in your authentication keys here
 
-consumerKey <- "O2FmvX2WaegyWhmW9********"
-consumerSecret <- "zelDESCaOFc2LvQoGSuta9ExIXhFLwSeERwEYQDT**********"
-accessToken <- 	"1941789895-QLKNfqZinj8NsbKioY74tecH4nmly**********"
-accessSecret <- "U8dD6zi6sflwKWQONAk3sN78mb0gf8ZPt23**********"
+fb_auth <- fbOAuth(app_id="119027498778445", 
+                    app_secret="53cc2540b464f0c3f52ae9e5f09aa4b2", 
+                    extended_permissions = TRUE) 
 
-setup_twitter_oauth(consumer_key = consumerKey, 
-                    consumer_secret = consumerSecret, 
-                    access_token = accessToken, 
-                    access_secret = accessSecret)
 
-#SearchTwitter
-twitter.data <- searchTwitter("Manchester United", n=1000,  lang='en')
-#n=1000 gives us 1000 tweets
+#getting posts from a facebook page
+fb_page <- getPage(page="manchesterunited", token=fb_auth, n = 10,  feed = FALSE, 
+              reactions = TRUE,  verbose = TRUE, api = NULL)
+#n=10 retrieves recent 10 posts from the facebook page 
 
-#We can either search from twitter or use an existing data file.
-twitter.data.df <- read.csv("data.csv")
+#Let's view the data we retrieved and chose one post for our analysis
+View(fb_page)
 
-#Conversion to data frame
-twitter.data.df <- twListToDF(twitter.data)
+##
+#I have chosen post of id 6 "Full time: United 1 AFC Bournemouth 0" post for the analysis as it has more user ineraction 
+##
 
-#GetText
-tweets.df <- as.data.frame(twitter.data.df$text)
-colnames(tweets.df)[1]<-"text"
+#Extract information of a certain post in the data we collected
+fb_post <- getPost(post = fb_page$id[6], n=1000, token=fb_auth)
+#n=1000; limiting our analysis to 1000 comments on the post
+
+#converting to DataFrame
+fb_post_df <- as.data.frame(fb_post[3])
+View(fb_post_df)
 
 ###
 ###TextCleaning###
 ###
 
 #for Mac or Unix OS
-tweets.df <- sapply(tweets.df$text, function(x) iconv(x, to='UTF-8-MAC', sub='byte'))
+comments_data <- sapply(fb_post_df$comments.message, function(x) iconv(x, to='UTF-8-MAC', sub='byte'))
 
 #for Windows based OS
-tweets.df <- sapply(tweets.df,function(row) iconv(row, "latin1", "ASCII", sub=""))
+comments_data <- sapply(fb_post_df$comments.message,function(row) iconv(row, "latin1", "ASCII", sub=""))
 
 #common for any platform
-tweets.df <- gsub("@\\w+", "", tweets.df)
-tweets.df <- gsub("#\\w+", '', tweets.df)
-tweets.df <- gsub("RT\\w+", "", tweets.df)
-tweets.df <- gsub("http.*", "", tweets.df)
-tweets.df <- gsub("RT", "", tweets.df)
-tweets.df <- sub("([.-])|[[:punct:]]", "\\1", tweets.df)
-tweets.df <- sub("(['])|[[:punct:]]", "\\1", tweets.df)
+comments_data <- gsub("@\\w+", "", comments_data)
+comments_data <- gsub("#\\w+", '', comments_data)
+comments_data <- gsub("RT\\w+", "", comments_data)
+comments_data <- gsub("http.*", "", comments_data)
+comments_data <- gsub("RT", "", comments_data)
+comments_data <- sub("([.-])|[[:punct:]]", "\\1", comments_data)
+comments_data <- sub("(['])|[[:punct:]]", "\\1", comments_data)
 
 #View the cleaned Data
-View(tweets.df)
+View(comments_data)
 
 #Reading the Lexicon positive and negative words
-pos <- readLines("positive_words.txt")
-neg <- readLines("negative_words.txt")
+pos<-readLines("positive_words.txt")
+neg<-readLines("negative_words.txt")
 
 #function to calculate sentiment score
 score.sentiment <- function(sentences, pos.words, neg.words, .progress='none')
@@ -110,34 +111,35 @@ score.sentiment <- function(sentences, pos.words, neg.words, .progress='none')
   scores.df <- data.frame(text=sentences, score=scores)
   return(scores.df)
 }
+
 #sentiment score
-scores_twitter <- score.sentiment(tweets.df, pos, neg, .progress='text')
-View(scores_twitter)
+score_fb <- score.sentiment(comments_data, pos, neg, .progress='text')
+View(score_fb)
 
 #Summary of the sentiment scores
-summary(scores_twitter)
+summary(score_fb)
 
 #Convert sentiment scores from numeric to character to enable the gsub function 
-scores_twitter$score_chr <- as.character(scores_twitter$score)
+score_fb$score_chr <- as.character(score_fb$score)
 
 #After looking at the summary(scores_twitter$score) decide on a threshold for the sentiment labels
-scores_twitter$score_chr <- gsub("^0$", "Neutral", scores_twitter$score_chr)
-scores_twitter$score_chr <- gsub("^1$|^2$|^3$|^4$", "Positive", scores_twitter$score_chr)
-scores_twitter$score_chr <- gsub("^5$|^6$|^7$|^8$|^9$|^10$|^11$|^12$", "Very Positive", scores_twitter$score_chr)
-scores_twitter$score_chr <- gsub("^-1$|^-2$|^-3$|^-4$", "Negative", scores_twitter$score_chr)
-scores_twitter$score_chr <- gsub("^-5$|^-6$|^-7$|^-8$|^-9$|^-10$|^-11$|^-12$", "Very Negative", scores_twitter$score_chr)
+score_fb$score_chr <- gsub("^0$", "Neutral", score_fb$score_chr)
+score_fb$score_chr <- gsub("^1$|^2$|^3$|^4$", "Positive", score_fb$score_chr)
+score_fb$score_chr <- gsub("^5$|^6$|^7$|^8$|^9$|^10$|^11$|^12$", "Very Positive", score_fb$score_chr)
+score_fb$score_chr <- gsub("^-1$|^-2$|^-3$|^-4$", "Negative", score_fb$score_chr)
+score_fb$score_chr <- gsub("^-5$|^-6$|^-7$|^-8$|^-9$|^-10$|^-11$|^-12$", "Very Negative", score_fb$score_chr)
 
-View(scores_twitter)
+View(score_fb)
 
 #Convert score_chr to factor for visualizations
-scores_twitter$score_chr <- as.factor(scores_twitter$score_chr)
+score_fb$score_chr<-as.factor(score_fb$score_chr)
 
 #plot to show number of negative, positive and neutral comments
-Viz1 <- ggplot(scores_twitter, aes(x=score_chr))+geom_bar()
+Viz1 <- ggplot(score_fb, aes(x=score_chr))+geom_bar()
 Viz1
 
 #writing to csv file
-write.csv(scores_twitter, file = "manchester_united_sentiment_score.csv")
+write.csv(score_fb, file = "manchester_united_sentiment_score.csv")
 
 ##This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
 ##The above code is inspired from various scripts and improved with several iterations.
