@@ -5,9 +5,8 @@ This repository helps Data Analytics/Science Enthusiasts to carry out Lexicon ba
 
 *This work is inspired from various scripts and improved with several iterations.
 
-*This code can be shared and re-used on any purpose.
+*This code can be shared and re-used on any purpose except for commercial purposes.
 
-*Not for commercial purposes.
 
 ![alt text](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
 
@@ -87,7 +86,13 @@ Steps to follow:
 
 Sample visualization using ggplot2
 
+Twitter Data
+
 ![alt text](https://raw.githubusercontent.com/chandrahas-reddy/Sentiment-Analysis-R-Programming/master/Twitter/Rplot.jpeg)
+
+Facebook Data
+
+![alt text](https://raw.githubusercontent.com/chandrahas-reddy/Sentiment-Analysis-R-Programming/master/Facebook/Rplot_fb.jpeg)
 
 11) Finally store this data into CSV for any further purposes. 
 
